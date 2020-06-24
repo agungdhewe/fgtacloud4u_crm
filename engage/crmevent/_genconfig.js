@@ -26,25 +26,34 @@ module.exports = {
 				crmevent_isunlimit: {text:'Unlimit', type: dbtype.boolean, null:false, default:'0'},
 				crmevent_isclose: {text:'Close', type: dbtype.boolean, null:false, default:'0'},
 
-				crmevent_targetinvited: {text:'Target Invited', type: dbtype.decimal(8,0), null:false, default:'0',  suppresslist: true},
-				crmevent_targetattendant: {text:'Target Attendant', type: dbtype.varchar(8,0), null:false, default:'0', suppresslist: true},
-				crmevent_targetnewcontact: {text:'Target New Contact', type: dbtype.varchar(8,0), null:false, default:'0', suppresslist: true},
-				crmevent_targettx: {text:'Target Tx', type: dbtype.varchar(8,0), null:false, default:'0', suppresslist: true},
-				crmevent_targettxnew: {text:'Target New Tx', type: dbtype.varchar(8,0), null:false, default:'0', suppresslist: true},
-				crmevent_targetbuyer: {text:'Target Buyer', type: dbtype.varchar(8,0), null:false, default:'0', suppresslist: true},
-				crmevent_targetbuyernew: {text:'Target Buyer New', type: dbtype.varchar(8,0), null:false, default:'0', suppresslist: true},
-				crmevent_targetsales: {text:'Target Sales', type: dbtype.varchar(8,0), null:false, default:'0', suppresslist: true},
-				crmevent_targetsalesnew: {text:'Target Sales New', type: dbtype.varchar(8,0), null:false, default:'0', suppresslist: true},
+				crmevent_targetinvited: {
+					text: 'Target Invited', type: dbtype.decimal(8,0), null:false, default:'0',  suppresslist: true,
+					tips: 'Target Calon Audience yang <b>akan diundang</b>.<br>Untuk ads misalnya IG,FB atau Google, bisa dikosongi.',
+					tipstype: 'visible'			
+				},
+				
+				crmevent_targetattendant: {
+					text:'Target Attendant', type: dbtype.decimal(8,0), null:false, default:'0', suppresslist: true,
+					tips: 'Target Audience yang <b>menghadiri</b> event ini.<br>Untuk digital ads, adalah actual audience yang melakukan telah kontak.'			
+				},
+				
+				crmevent_targetnewcontact: {text:'Target New Contact', type: dbtype.decimal(8,0), null:false, default:'0', suppresslist: true},
+				crmevent_targettx: {text:'Target Tx', type: dbtype.decimal(8,0), null:false, default:'0', suppresslist: true},
+				crmevent_targettxnew: {text:'Target New Tx', type: dbtype.decimal(8,0), null:false, default:'0', suppresslist: true},
+				crmevent_targetbuyer: {text:'Target Buyer', type: dbtype.decimal(8,0), null:false, default:'0', suppresslist: true},
+				crmevent_targetbuyernew: {text:'Target Buyer New', type: dbtype.decimal(8,0), null:false, default:'0', suppresslist: true},
+				crmevent_targetsales: {text:'Target Sales', type: dbtype.decimal(8,0), null:false, default:'0', suppresslist: true},
+				crmevent_targetsalesnew: {text:'Target Sales New', type: dbtype.decimal(8,0), null:false, default:'0', suppresslist: true},
 
-				crmevent_totalinvited: {text:'Total Invited', type: dbtype.decimal(8,0), null:false, default:'0',  suppresslist: true, options:{readonly:true}},
-				crmevent_totalattendant: {text:'Total Attendant', type: dbtype.varchar(8,0), null:false, default:'0', suppresslist: true, options:{readonly:true}},
-				crmevent_totalnewcontact: {text:'Total New Contact', type: dbtype.varchar(8,0), null:false, default:'0', suppresslist: true, options:{readonly:true}},
-				crmevent_totaltx: {text:'Tx', type: dbtype.varchar(8,0), null:false, default:'0', suppresslist: true, options:{readonly:true}},
-				crmevent_totaltxnew: {text:'New Tx', type: dbtype.varchar(8,0), null:false, default:'0', suppresslist: true, options:{readonly:true}},
-				crmevent_totalbuyer: {text:'Buyer', type: dbtype.varchar(8,0), null:false, default:'0', suppresslist: true, options:{readonly:true}},
-				crmevent_totalbuyernew: {text:'Buyer New', type: dbtype.varchar(8,0), null:false, default:'0', suppresslist: true, options:{readonly:true}},
-				crmevent_totalsales: {text:'Sales', type: dbtype.varchar(8,0), null:false, default:'0', suppresslist: true, options:{readonly:true}},
-				crmevent_totalsalesnew: {text:'Sales New', type: dbtype.varchar(8,0), null:false, default:'0', suppresslist: true, options:{readonly:true}},
+				crmevent_totalinvited: {text:'Total Invited', type: dbtype.decimal(8,0), null:false, default:'0',  suppresslist: true, options:{disabled:true}},
+				crmevent_totalattendant: {text:'Total Attendant', type: dbtype.decimal(8,0), null:false, default:'0', suppresslist: true, options:{disabled:true}},
+				crmevent_totalnewcontact: {text:'Total New Contact', type: dbtype.decimal(8,0), null:false, default:'0', suppresslist: true, options:{disabled:true}},
+				crmevent_totaltx: {text:'Total Tx', type: dbtype.decimal(8,0), null:false, default:'0', suppresslist: true, options:{disabled:true}},
+				crmevent_totaltxnew: {text:'Total New Tx', type: dbtype.decimal(8,0), null:false, default:'0', suppresslist: true, options:{disabled:true}},
+				crmevent_totalbuyer: {text:'Total Buyer', type: dbtype.decimal(8,0), null:false, default:'0', suppresslist: true, options:{disabled:true}},
+				crmevent_totalbuyernew: {text:'Total Buyer New', type: dbtype.decimal(8,0), null:false, default:'0', suppresslist: true, options:{disabled:true}},
+				crmevent_totalsales: {text:'Total Sales', type: dbtype.decimal(8,0), null:false, default:'0', suppresslist: true, options:{disabled:true}},
+				crmevent_totalsalesnew: {text:'Total Sales New', type: dbtype.decimal(8,0), null:false, default:'0', suppresslist: true, options:{disabled:true}},
 				
 				crmsource_id: {
 					text:'Alokasi Source', type: dbtype.varchar(10), null:false, uppercase: true, suppresslist: true,
@@ -62,9 +71,9 @@ module.exports = {
 				'crmevent_name' : ['crmevent_name']
 			},
 
-			values: [
-				{crmevent_id:'MANUAL', crmevent_name:'MANUAL', crmevent_dtstart:'2020-01-01', crmevent_dtend:'2030-12-31', crmevent_isunlimit:'1'}
-			],			
+			// values: [
+			// 	{crmevent_id:'MANUAL', crmevent_name:'MANUAL', crmevent_dtstart:'2020-01-01', crmevent_dtend:'2030-12-31', crmevent_isunlimit:'1'}
+			// ],			
 		},
 
 
@@ -73,7 +82,11 @@ module.exports = {
 			comment: 'CRM Event Invited, yang diundang di event ini, baik yang sudah ada di contact atau belum. data ini sifatnya bulk.',
 			data: {
 				crmeventinvited_id: {text:'ID', type: dbtype.varchar(14), null:false},
-				crmeventinvited_contact : {text:'Contact', type: dbtype.varchar(90), null:false, uppercase: true, options:{required:true,invalidMessage:'Contact harus diisi dengan no telpon / email'}},
+				crmeventinvited_contact : {
+					text:'Contact', type: dbtype.varchar(90), null:false, uppercase: true, options:{required:true,invalidMessage:'Contact harus diisi dengan no telpon / email'},
+					tips: 'Nomor/email yang akan di hubungi',
+					tipstype: 'visible'					
+				},
 				crmeventinvited_name : {text:'Name', type: dbtype.varchar(90), null:false, uppercase: true, options:{required:true,invalidMessage:'Nama harus diisi'}},
 				crmeventinvited_address : {text:'Name', type: dbtype.varchar(255), null:false, uppercase: true, suppresslist: true},
 				crmeventinvited_city : {text:'City', type: dbtype.varchar(30), null:false, uppercase: true, suppresslist: true},
@@ -84,10 +97,11 @@ module.exports = {
 				user_id: {
 					text:'PIC', type: dbtype.varchar(14), null:false, uppercase: true, suppresslist: true,
 					options:{required:true,invalidMessage:'PIC harus diisi', prompt:'-- PILIH --'},
+					tips: 'yang bertugas menhubungi kontak ini',
 					comp: comp.Combo({
-						table: 'fgta_user', 
+						table: 'fgt_user', 
 						field_value: 'user_id', field_display: 'user_fullname', 
-						api: 'fgta/framework/user/list'})				
+						api: 'fgta/framework/fguser/list'})				
 				},
 
 				crmevent_id: {text:'Event', type: dbtype.varchar(14), null:false},
@@ -116,8 +130,8 @@ module.exports = {
 		title: 'CRM Event',
 		header: 'trn_crmevent',
 		detils: {
-
-			
+			'invited' : {title: 'Invited', table:'trn_crmeventinvited', form: true, headerview:'crmevent_name'},
+			'attendant' : {title: 'Attendant', table:'trn_crmeventattendant', form: true, headerview:'crmevent_name'},
 		}
 	}
 }
