@@ -2,7 +2,6 @@ var this_page_id;
 var this_page_options;
 
 
-
 const txt_title = $('#pnl_editattendantform-title')
 const btn_edit = $('#pnl_editattendantform-btn_edit')
 const btn_save = $('#pnl_editattendantform-btn_save')

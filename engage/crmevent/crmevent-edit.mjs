@@ -149,7 +149,16 @@ export async function init(opt) {
 	})
 
 
+	if (this_page_options.variancename=='commit') {
+		btn_commit.linkbutton({onClick: ()=>{
+			btn_commit_click();
+		}});
+	}
+}
 
+
+function btn_commit_click() {
+	console.log('commit');
 }
 
 
@@ -182,17 +191,14 @@ export function open(data, rowid, viewmode=true, fn_callback) {
 		fn_callback()
 
 
-		// fill data, bisa dilakukan secara manual dengan cara berikut:	
-		// form
-			// .setValue(obj.txt_id, result.record.id)
-			// .setValue(obj.txt_nama, result.record.nama)
-			// .setValue(obj.cbo_prov, result.record.prov_id, result.record.prov_nama)
-			// .setValue(obj.chk_isdisabled, result.record.disabled)
-			// .setValue(obj.txt_alamat, result.record.alamat)
-			// ....... dst dst
-			// .commit()
-			// .setViewMode()
-			// ....... dst dst
+		if (this_page_options.variancename=='commit') {
+			console.log(result.record)
+			if (result.record.crmevent_iscommit=="1") {
+				btn_commit.linkbutton('disable')
+			} else {
+				btn_commit.linkbutton('enable')
+			}
+		}
 
 	}
 

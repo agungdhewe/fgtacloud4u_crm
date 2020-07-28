@@ -2,23 +2,18 @@ import {fgta4grid} from  '../../../../../index.php/asset/fgta/framework/fgta4lib
 import {fgta4form} from  '../../../../../index.php/asset/fgta/framework/fgta4libs/fgta4form.mjs'
 import * as fgta4pages from '../../../../../index.php/asset/fgta/framework/fgta4libs/fgta4pages.mjs'
 import * as fgta4pageslider from '../../../../../index.php/asset/fgta/framework/fgta4libs/fgta4pageslider.mjs'
-import * as apis from './crmevent.apis.mjs'
-import * as pList from './crmevent-list.mjs'
-import * as pEdit from './crmevent-edit.mjs'
-import * as pEditInvitedgrid from './crmevent-invitedgrid.mjs'
-import * as pEditInvitedform from './crmevent-invitedform.mjs'
-import * as pEditAttendantgrid from './crmevent-attendantgrid.mjs'
-import * as pEditAttendantform from './crmevent-attendantform.mjs'
-
+import * as apis from './request.apis.mjs'
+import * as pList from './request-list.mjs'
+import * as pEdit from './request-edit.mjs'
+import * as pEditUsergrid from './request-usergrid.mjs'
+import * as pEditUserform from './request-userform.mjs'
 
 
 
 const pnl_list = $('#pnl_list')
 const pnl_edit = $('#pnl_edit')
-const pnl_editinvitedgrid = $('#pnl_editinvitedgrid')
-const pnl_editinvitedform = $('#pnl_editinvitedform')
-const pnl_editattendantgrid = $('#pnl_editattendantgrid')
-const pnl_editattendantform = $('#pnl_editattendantform')
+const pnl_editusergrid = $('#pnl_editusergrid')
+const pnl_edituserform = $('#pnl_edituserform')
 
 
 
@@ -33,8 +28,6 @@ export async function init(opt) {
 	// $ui.grd_list = new fgta4grid()
 	// $ui.grd_edit = new fgta4grid()
 
-
-	
 	global.fgta4grid = fgta4grid
 	global.fgta4form = fgta4form
 
@@ -46,10 +39,8 @@ export async function init(opt) {
 		.initPages([
 			{panel: pnl_list, handler: pList},
 			{panel: pnl_edit, handler: pEdit},
-			{panel: pnl_editinvitedgrid, handler: pEditInvitedgrid},
-			{panel: pnl_editinvitedform, handler: pEditInvitedform},
-			{panel: pnl_editattendantgrid, handler: pEditAttendantgrid},
-			{panel: pnl_editattendantform, handler: pEditAttendantform}			
+			{panel: pnl_editusergrid, handler: pEditUsergrid},
+			{panel: pnl_edituserform, handler: pEditUserform}			
 		], opt)
 
 	$ui.setPages(pages)

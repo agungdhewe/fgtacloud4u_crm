@@ -1,25 +1,24 @@
 var this_page_id;
+var this_page_options;
 
 
 
-const txt_title = $('#pnl_editattendantform-title')
-const btn_edit = $('#pnl_editattendantform-btn_edit')
-const btn_save = $('#pnl_editattendantform-btn_save')
-const btn_delete = $('#pnl_editattendantform-btn_delete')
-const btn_prev = $('#pnl_editattendantform-btn_prev')
-const btn_next = $('#pnl_editattendantform-btn_next')
-const btn_addnew = $('#pnl_editattendantform-btn_addnew')
-const chk_autoadd = $('#pnl_editattendantform-autoadd')
+const txt_title = $('#pnl_edituserform-title')
+const btn_edit = $('#pnl_edituserform-btn_edit')
+const btn_save = $('#pnl_edituserform-btn_save')
+const btn_delete = $('#pnl_edituserform-btn_delete')
+const btn_prev = $('#pnl_edituserform-btn_prev')
+const btn_next = $('#pnl_edituserform-btn_next')
+const btn_addnew = $('#pnl_edituserform-btn_addnew')
+const chk_autoadd = $('#pnl_edituserform-autoadd')
 
-const pnl_form = $('#pnl_editattendantform-form')
+const pnl_form = $('#pnl_edituserform-form')
 const obj = {
-	txt_crmeventattendant_id: $('#pnl_editattendantform-txt_crmeventattendant_id'),
-	txt_crmeventattendant_contact: $('#pnl_editattendantform-txt_crmeventattendant_contact'),
-	txt_crmeventattendant_name: $('#pnl_editattendantform-txt_crmeventattendant_name'),
-	txt_crmeventattendant_address: $('#pnl_editattendantform-txt_crmeventattendant_address'),
-	txt_crmeventattendant_city: $('#pnl_editattendantform-txt_crmeventattendant_city'),
-	dt_crmeventattendant_contactdate: $('#pnl_editattendantform-dt_crmeventattendant_contactdate'),
-	txt_crmevent_id: $('#pnl_editattendantform-txt_crmevent_id')
+	txt_partneruser_id: $('#pnl_edituserform-txt_partneruser_id'),
+	txt_partneruser_email1: $('#pnl_edituserform-txt_partneruser_email1'),
+	txt_partneruser_password: $('#pnl_edituserform-txt_partneruser_password'),
+	chk_partneruser_isdisabled: $('#pnl_edituserform-chk_partneruser_isdisabled'),
+	txt_partner_id: $('#pnl_edituserform-txt_partner_id')
 }
 
 
@@ -30,11 +29,13 @@ let header_data = {}
 
 export async function init(opt) {
 	this_page_id = opt.id
+	this_page_options = opt;
+
 	
 	form = new global.fgta4form(pnl_form, {
-		primary: obj.txt_crmeventattendant_id,
+		primary: obj.txt_partneruser_id,
 		autoid: true,
-		logview: 'trn_crmeventattendant',
+		logview: 'mst_partneruser',
 		btn_edit: btn_edit,
 		btn_save: btn_save,
 		btn_delete: btn_delete,		
@@ -84,15 +85,15 @@ export async function init(opt) {
 			ev.detail.cancel = true;
 			if (form.isDataChanged()) {
 				form.canceledit(()=>{
-					$ui.getPages().show('pnl_editattendantgrid', ()=>{
+					$ui.getPages().show('pnl_editusergrid', ()=>{
 						form.setViewMode()
-						$ui.getPages().ITEMS['pnl_editattendantgrid'].handler.scrolllast()
+						$ui.getPages().ITEMS['pnl_editusergrid'].handler.scrolllast()
 					})					
 				})
 			} else {
-				$ui.getPages().show('pnl_editattendantgrid', ()=>{
+				$ui.getPages().show('pnl_editusergrid', ()=>{
 					form.setViewMode()
-					$ui.getPages().ITEMS['pnl_editattendantgrid'].handler.scrolllast()
+					$ui.getPages().ITEMS['pnl_editusergrid'].handler.scrolllast()
 				})
 			}
 		
@@ -138,11 +139,11 @@ export function getForm() {
 
 export function open(data, rowid, hdata) {
 	// console.log(header_data)
-	txt_title.html(hdata.crmevent_name)
+	txt_title.html(hdata.partner_name)
 	header_data = hdata
 
 	var fn_dataopening = async (options) => {
-		options.api = `${global.modulefullname}/attendant-open`
+		options.api = `${global.modulefullname}/user-open`
 		options.criteria[form.primary.mapping] = data[form.primary.mapping]
 	}
 
@@ -194,24 +195,23 @@ export function createnew(hdata) {
 
 	txt_title.html('Create New Row')
 	form.createnew(async (data, options)=>{
-		data.crmevent_id= hdata.crmevent_id
-		data.attendant_value = 0
+		data.partner_id= hdata.partner_id
+		data.user_value = 0
 
-			data.crmeventattendant_contactdate = global.now()
 
 
 
 
 		form.rowid = null
 		options.OnCanceled = () => {
-			$ui.getPages().show('pnl_editattendantgrid')
+			$ui.getPages().show('pnl_editusergrid')
 		}
 	})
 }
 
 
 async function form_datasaving(data, options) {
-	options.api = `${global.modulefullname}/attendant-save`
+	options.api = `${global.modulefullname}/user-save`
 
 
 
@@ -222,7 +222,7 @@ async function form_datasaved(result, options) {
 	Object.assign(data, form.getData(), result.dataresponse)
 
 
-	form.rowid = $ui.getPages().ITEMS['pnl_editattendantgrid'].handler.updategrid(data, form.rowid)
+	form.rowid = $ui.getPages().ITEMS['pnl_editusergrid'].handler.updategrid(data, form.rowid)
 
 	var autoadd = chk_autoadd.prop("checked")
 	if (autoadd) {
@@ -233,13 +233,13 @@ async function form_datasaved(result, options) {
 }
 
 async function form_deleting(data, options) {
-	options.api = `${global.modulefullname}/attendant-delete`
+	options.api = `${global.modulefullname}/user-delete`
 }
 
 async function form_deleted(result, options) {
 	options.suppressdialog = true
-	$ui.getPages().show('pnl_editattendantgrid', ()=>{
-		$ui.getPages().ITEMS['pnl_editattendantgrid'].handler.removerow(form.rowid)
+	$ui.getPages().show('pnl_editusergrid', ()=>{
+		$ui.getPages().ITEMS['pnl_editusergrid'].handler.removerow(form.rowid)
 	})
 	
 }
@@ -262,7 +262,7 @@ function form_viewmodechanged(viewonly) {
 
 
 function form_idsetup(options) {
-	var objid = obj.txt_crmeventattendant_id
+	var objid = obj.txt_partneruser_id
 	switch (options.action) {
 		case 'fill' :
 			objid.textbox('disable') 
@@ -297,7 +297,7 @@ function btn_prev_click() {
 	
 	var trid = prevode.attr('id')
 	var dataid = prevode.attr('dataid')
-	var record = $ui.getPages().ITEMS['pnl_editattendantgrid'].handler.getGrid().DATA[dataid]
+	var record = $ui.getPages().ITEMS['pnl_editusergrid'].handler.getGrid().DATA[dataid]
 
 	open(record, trid, header_data)
 }
@@ -310,7 +310,7 @@ function btn_next_click() {
 
 	var trid = nextode.attr('id')
 	var dataid = nextode.attr('dataid')
-	var record = $ui.getPages().ITEMS['pnl_editattendantgrid'].handler.getGrid().DATA[dataid]
+	var record = $ui.getPages().ITEMS['pnl_editusergrid'].handler.getGrid().DATA[dataid]
 
 	open(record, trid, header_data)
 }

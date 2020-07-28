@@ -1,16 +1,6 @@
 {
 	"title" : "Event",
-	"icon" : "icon-crmevents-white.png",
-	"variance" : {
-		"commit" : {
-			"title" : "Event - Commit",
-			"icon" : "icon-crmevents-commit-white.png"
-		},
-		"uncommit" : {
-			"title" : "Event - UnCommit",
-			"icon" : "icon-crmevents-uncommit-white.png"
-		}		
-	},
+	"variance" : {},
 	"allowanonymous" : true,
 	"allowedgroups" : ["public"],
 	"apis" : {

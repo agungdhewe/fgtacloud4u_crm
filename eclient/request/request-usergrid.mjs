@@ -1,10 +1,11 @@
 var this_page_id;
+var this_page_options;
 
-const tbl_list = $('#pnl_editattendantgrid-tbl_list')
-const txt_title = $('#pnl_editattendantgrid-title')
-const pnl_control = $('#pnl_editattendantgrid-control')
-const btn_removechecked  = $('#pnl_editattendantgrid-removechecked')
-const btn_addrow = $('#pnl_editattendantgrid-addrow')
+const tbl_list = $('#pnl_editusergrid-tbl_list')
+const txt_title = $('#pnl_editusergrid-title')
+const pnl_control = $('#pnl_editusergrid-control')
+const btn_removechecked  = $('#pnl_editusergrid-removechecked')
+const btn_addrow = $('#pnl_editusergrid-addrow')
 
 let grd_list = {}
 let header_data = {}
@@ -12,6 +13,8 @@ let last_scrolltop = 0
 
 export async function init(opt) {
 	this_page_id = opt.id
+	this_page_options = opt;
+	
 	
 	grd_list = new global.fgta4grid(tbl_list, {
 		OnRowFormatting: (tr) => { grd_list_rowformatting(tr) },
@@ -64,7 +67,7 @@ export function OnSizeRecalculated(width, height) {
 export function createnew(data, options) {
 	// pada saat membuat data baru di header
 	grd_list.clear()
-	txt_title.html(data.crmevent_name)
+	txt_title.html(data.partner_name)
 	header_data = data
 }
 
@@ -72,12 +75,12 @@ export function OpenDetil(data) {
 	// saat di klik di edit utama, pada detil information
 
 	grd_list.clear()
-	txt_title.html(data.crmevent_name)
+	txt_title.html(data.partner_name)
 	header_data = data
 
 	var fn_listloading = async (options) => {
-		options.api = `${global.modulefullname}/attendant-list`
-		options.criteria['id'] = data.crmevent_id
+		options.api = `${global.modulefullname}/user-list`
+		options.criteria['id'] = data.partner_id
 	}
 	var fn_listloaded = async (result, options) => {
 		// console.log(result)
@@ -86,7 +89,7 @@ export function OpenDetil(data) {
 
 
 
-		var detilform = $ui.getPages().ITEMS['pnl_editattendantform'].handler.getForm()
+		var detilform = $ui.getPages().ITEMS['pnl_edituserform'].handler.getForm()
 
 		if (detilform.AllowAddRecord) {
 			btn_addrow.show()
@@ -142,8 +145,8 @@ function grd_list_rowclick(tr, ev) {
 	// console.log(record)
 
 	last_scrolltop = $(window).scrollTop()
-	$ui.getPages().show('pnl_editattendantform', () => {
-		$ui.getPages().ITEMS['pnl_editattendantform'].handler.open(record, trid, header_data)
+	$ui.getPages().show('pnl_edituserform', () => {
+		$ui.getPages().ITEMS['pnl_edituserform'].handler.open(record, trid, header_data)
 	})	
 }
 
@@ -165,7 +168,7 @@ function btn_removechecked_click() {
 		yes: () => {
 			grd_list.removechecked({
 				OnRemoving : async (options) => {
-					var apiurl = `${global.modulefullname}/attendant-delete`
+					var apiurl = `${global.modulefullname}/user-delete`
 					var args = {data: options.data, options: {}}
 					try {
 						let result = await $ui.apicall(apiurl, args)
@@ -181,7 +184,7 @@ function btn_removechecked_click() {
 
 
 function btn_addrow_click() {
-	$ui.getPages().show('pnl_editattendantform', ()=>{
-		$ui.getPages().ITEMS['pnl_editattendantform'].handler.createnew(header_data)
+	$ui.getPages().show('pnl_edituserform', ()=>{
+		$ui.getPages().ITEMS['pnl_edituserform'].handler.createnew(header_data)
 	})	
 }
